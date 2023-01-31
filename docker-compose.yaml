@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./Application
+      dockerfile: Dockerfile
+    ports:
+     - "3001:3000"
+    environment:
+     - REACT_APP_BACKEND_URL=http://backend:8000
+    depends_on:
+     - backend
+    restart: always
+  
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+     - "8000:8000"
+    environment:
+     - MONGO_URI=mongodb+srv://furqan:1234@cluster0.ta4asmf.mongodb.net/?retryWrites=true&w=majority
+     
+    restart: always

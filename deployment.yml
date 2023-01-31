@@ -1,0 +1,56 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-node-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactapp
+  template:
+    metadata:
+      labels:
+        app: reactapp
+    spec:
+      containers:
+        - name: frontend
+          image: furqanalihunzai/frontend:latest
+          ports:
+            - containerPort: 3000
+          command: [ "npm", "start" ]
+        - name: backend
+          image: furqanalihunzai/backend:latest
+          env:
+            - name: MONGODB_URI
+              value: mongodb+srv://furqan:1234@cluster0.ta4asmf.mongodb.net/?retryWrites=true&w=majority
+          ports:
+            - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactapp-service
+spec:
+  selector:
+    app: reactapp
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactappback-service
+spec:
+  selector:
+    app: reactapp
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+  type: ClusterIP
