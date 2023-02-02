@@ -8,7 +8,7 @@ app.use(express.urlencoded());
 app.use(cors());
 
 mongoose.connect(
-  "mongodb+srv://furqan:1234@cluster0.ta4asmf.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://furqan:1234@passssss.ta4asmf.mongodb.net/?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
